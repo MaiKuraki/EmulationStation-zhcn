@@ -14,16 +14,16 @@ GuiTimeSettings::GuiTimeSettings(Window* window, const char* title) : GuiScreens
 	time(&time_now);
 	curr_time = localtime(&time_now);
 	//set year
-	auto year = std::make_shared<SliderComponent>(mWindow, 1970.f, 2099.f, 1.f, "年");
+	auto year = std::make_shared<SliderComponent>(mWindow, 1970.f, 2099.f, 1.f, " ");
 	year->setValue((float)(curr_time->tm_year + 1900));
 	addWithLabel("YEAR", year);
 
 	//set month
-	auto month = std::make_shared<SliderComponent>(mWindow, 1.f, 12.f, 1.f, "月");
+	auto month = std::make_shared<SliderComponent>(mWindow, 1.f, 12.f, 1.f, " ");
 	month->setValue((float)(curr_time->tm_mon + 1));
 	addWithLabel("MONTH", month);
 	//set day
-	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, "日");
+	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, " ");
 	mday->setValue((float)(curr_time->tm_mday));
 	addWithLabel("DAY", mday);
 	addSaveFunc([year,month,mday] {
@@ -32,11 +32,11 @@ GuiTimeSettings::GuiTimeSettings(Window* window, const char* title) : GuiScreens
 		system(str.c_str());
 	});
 	//set hour
-	auto hour = std::make_shared<SliderComponent>(mWindow, 0.f, 23.f, 1.f, "时");
+	auto hour = std::make_shared<SliderComponent>(mWindow, 0.f, 23.f, 1.f, " ");
 	hour->setValue((float)(curr_time->tm_hour));
 	addWithLabel("HOUR", hour);
 	//set min
-	auto minute = std::make_shared<SliderComponent>(mWindow, 0.f, 59.f, 1.f, "分");
+	auto minute = std::make_shared<SliderComponent>(mWindow, 0.f, 59.f, 1.f, " ");
 	minute->setValue((float)(curr_time->tm_min));
 	addWithLabel("MINUTE", minute);
 	addSaveFunc([minute,hour] {

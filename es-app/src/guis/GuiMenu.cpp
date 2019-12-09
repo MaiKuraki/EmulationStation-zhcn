@@ -25,7 +25,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "主菜�
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
 	if (isFullUI)
-		addEntry("游戏搜索设置", 0x777777FF, true, [this] { openScraperSettings(); });
+		addEntry("游戏信息设置", 0x777777FF, true, [this] { openScraperSettings(); });
 
 	addEntry("音频设置", 0x777777FF, true, [this] { openSoundSettings(); });
 
@@ -52,7 +52,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "主菜�
 
 void GuiMenu::openScraperSettings()
 {
-	auto s = new GuiSettings(mWindow, "游戏搜索设置");
+	auto s = new GuiSettings(mWindow, "游戏信息设置");
 
 	// scrape from
 	auto scraper_list = std::make_shared< OptionListComponent< std::string > >(mWindow, "在此寻找", false);
@@ -78,7 +78,7 @@ void GuiMenu::openScraperSettings()
 	openAndSave = [s, openAndSave] { s->save(); openAndSave(); };
 	row.makeAcceptInputHandler(openAndSave);
 
-	auto scrape_now = std::make_shared<TextComponent>(mWindow, "开始搜索", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+	auto scrape_now = std::make_shared<TextComponent>(mWindow, "开始下载", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 	auto bracket = makeArrow(mWindow);
 	row.addElement(scrape_now, true);
 	row.addElement(bracket, false);
@@ -598,8 +598,8 @@ HelpStyle GuiMenu::getHelpStyle()
 std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("up/down", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
-	prompts.push_back(HelpPrompt("start", "close"));
+	prompts.push_back(HelpPrompt("up/down", "选择"));
+	prompts.push_back(HelpPrompt("a", "确认"));
+	prompts.push_back(HelpPrompt("start", "关闭"));
 	return prompts;
 }

@@ -58,14 +58,14 @@ void ViewController::goToStart()
 		}
 
 		// Requested system doesn't exist
-		Settings::getInstance()->setString("StartupSystem", "");
+		Settings::getInstance()->setString("系统启动", "");
 	}
 	goToSystemView(SystemData::sSystemVector.at(0));
 }
 
 void ViewController::ReloadAndGoToStart()
 {
-	mWindow->renderLoadingScreen("Loading...");
+	mWindow->renderLoadingScreen("载入中...");
 	ViewController::get()->reloadAll();
 	ViewController::get()->goToStart();
 }
@@ -438,7 +438,7 @@ void ViewController::preload()
 		{
 			i++;
 			char buffer[100];
-			sprintf (buffer, "Loading '%s' (%d/%d)",
+			sprintf (buffer, "加载'%s'(%d/%d)",
 				(*it)->getFullName().c_str(), i, (int)SystemData::sSystemVector.size());
 			mWindow->renderLoadingScreen(std::string(buffer));
 		}

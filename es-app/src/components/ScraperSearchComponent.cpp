@@ -240,7 +240,7 @@ void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>
 		else
 		{
 			ComponentListRow row;
-			row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND - SKIP", font, color), true);
+			row.addElement(std::make_shared<TextComponent>(mWindow, "没有找到游戏 - 跳过", font, color), true);
 
 			if(mSkipCallback)
 				row.makeAcceptInputHandler(mSkipCallback);
@@ -279,9 +279,9 @@ void ScraperSearchComponent::onSearchError(const std::string& error)
 {
 	LOG(LogInfo) << "ScraperSearchComponent search error: " << error;
 	mWindow->pushGui(new GuiMsgBox(mWindow, Utils::String::toUpper(error),
-		"RETRY", std::bind(&ScraperSearchComponent::search, this, mLastSearch),
-		"SKIP", mSkipCallback,
-		"CANCEL", mCancelCallback));
+		"重试", std::bind(&ScraperSearchComponent::search, this, mLastSearch),
+		"跳过", mSkipCallback,
+		"取消", mCancelCallback));
 }
 
 int ScraperSearchComponent::getSelectedIndex()
@@ -453,7 +453,7 @@ void ScraperSearchComponent::openInputScreen(ScraperSearchParams& params)
 	};
 
 	stop();
-	mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
+	mWindow->pushGui(new GuiTextEditPopup(mWindow, "搜索",
 		// initial value is last search if there was one, otherwise the clean path name
 		params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
 		searchForFunc, false, "SEARCH"));
@@ -463,7 +463,7 @@ std::vector<HelpPrompt> ScraperSearchComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
 	if(getSelectedIndex() != -1)
-		prompts.push_back(HelpPrompt("a", "accept result"));
+		prompts.push_back(HelpPrompt("a", "保存结果"));
 
 	return prompts;
 }

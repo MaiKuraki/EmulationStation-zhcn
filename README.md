@@ -4,6 +4,8 @@ EmulationStation
 This is a fork from EmulationStation for RetroPie, intend to translate it to Simplified Chinese.
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 
+This version contains information about "Game Case console". "Game Case" is an upgrade kit of Nintendo GameBoyAdvance. 
+Basically it puts a Rpi-CM3 into GBA case and upgrades the screen to 480x320, with 3hrs battery life. In short, please buy it.
 Building
 ========
 

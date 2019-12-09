@@ -1,7 +1,7 @@
 EmulationStation
 ================
 
-This is a fork of EmulationStation for RetroPie.
+This is a fork from EmulationStation for RetroPie, intend to translate it to Simplified Chinese.
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 
 Building

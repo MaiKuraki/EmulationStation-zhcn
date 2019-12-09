@@ -375,11 +375,11 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
 	if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL)
-		prompts.push_back(HelpPrompt("up/down", "choose"));
+		prompts.push_back(HelpPrompt("up/down", "选择"));
 	else
-		prompts.push_back(HelpPrompt("left/right", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
-	prompts.push_back(HelpPrompt("x", "random"));
+		prompts.push_back(HelpPrompt("left/right", "选择"));
+	prompts.push_back(HelpPrompt("a", "确认"));
+	prompts.push_back(HelpPrompt("x", "随机"));
 
 	if (!UIModeController::getInstance()->isUIModeKid() && Settings::getInstance()->getBool("ScreenSaverControls"))
 		prompts.push_back(HelpPrompt("select", "launch screensaver"));

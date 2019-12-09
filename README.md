@@ -9,6 +9,8 @@ Basically it puts a Rpi-CM3 into GBA case and upgrades the screen to 480x320, wi
 
 However, nobody can stop you using this fork on any platform you like. You can edit EmulationStation-zhcn/es-app/src/guis/GuiMenu.cpp to remove Game Case related info.
 
+If you find something wrong, feel free to pull requests.
+
 
 Building
 ========

@@ -33,7 +33,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		char curChar = (char)toupper(getGamelist()->getCursor()->getSortName()[0]);
 		if(curChar < startChar || curChar > endChar)
 			curChar = startChar;
-
+		bool bHasASCIILetter = false;
 		mJumpToLetterList = std::make_shared<LetterList>(mWindow, "跳转到...", false);
 		for (char c = startChar; c <= endChar; c++)
 		{
@@ -45,6 +45,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 				if (c == candidate)
 				{
 					mJumpToLetterList->add(std::string(1, c), c, c == curChar);
+					bHasASCIILetter = true;
 					break;
 				}
 			}
@@ -53,7 +54,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		row.addElement(std::make_shared<TextComponent>(mWindow, "跳转到...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		row.addElement(mJumpToLetterList, false);
 		row.input_handler = [&](InputConfig* config, Input input) {
-			if(config->isMappedTo("a", input) && input.value)
+			if(config->isMappedTo("a", input) && input.value && bHasASCIILetter)//fix weird rom name made jump crash(i.e: Chinese Rom)
 			{
 				jumpToLetter();
 				return true;

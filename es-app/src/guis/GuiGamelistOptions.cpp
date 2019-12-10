@@ -33,7 +33,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		char curChar = (char)toupper(getGamelist()->getCursor()->getSortName()[0]);
 		if(curChar < startChar || curChar > endChar)
 			curChar = startChar;
-
+		bool bHasASCIILetter = false;
 		mJumpToLetterList = std::make_shared<LetterList>(mWindow, "跳转到...", false);
 		for (char c = startChar; c <= endChar; c++)
 		{
@@ -45,6 +45,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 				if (c == candidate)
 				{
 					mJumpToLetterList->add(std::string(1, c), c, c == curChar);
+					bHasASCIILetter = true;
 					break;
 				}
 			}
@@ -64,7 +65,11 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 			}
 			return false;
 		};
-		mMenu.addRow(row);
+		if(bHasASCIILetter)
+		{
+			mMenu.addRow(row);//fix weird rom name made jump crash(i.e: Chinese Rom)
+		}
+
 
 		// sort list by
 		mListSort = std::make_shared<SortList>(mWindow, "以此排序游戏：", false);

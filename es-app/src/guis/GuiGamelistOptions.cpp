@@ -54,12 +54,13 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		row.addElement(std::make_shared<TextComponent>(mWindow, "跳转到...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		row.addElement(mJumpToLetterList, false);
 		row.input_handler = [&](InputConfig* config, Input input) {
-			if(config->isMappedTo("a", input) && input.value && bHasASCIILetter)//fix weird rom name made jump crash(i.e: Chinese Rom)
+			//fix weird rom name made jump crash(i.e: Chinese Rom)
+			if(config->isMappedTo("a", input) && input.value && bHasASCIILetter)
 			{
 				jumpToLetter();
 				return true;
 			}
-			else if(mJumpToLetterList->input(config, input))
+			else if(mJumpToLetterList->input(config, input) && bHasASCIILetter)
 			{
 				return true;
 			}

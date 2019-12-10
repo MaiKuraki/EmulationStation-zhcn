@@ -55,12 +55,12 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		row.addElement(mJumpToLetterList, false);
 		row.input_handler = [&](InputConfig* config, Input input) {
 			//fix weird rom name made jump crash(i.e: Chinese Rom)
-			if(config->isMappedTo("a", input) && input.value && bHasASCIILetter)
+			if(config->isMappedTo("a", input) && input.value)
 			{
 				jumpToLetter();
 				return true;
 			}
-			else if(mJumpToLetterList->input(config, input) && bHasASCIILetter)
+			else if(mJumpToLetterList->input(config, input))
 			{
 				return true;
 			}

@@ -536,7 +536,7 @@ void GuiMenu::addVersionInfo()
 	mVersion.setFont(Font::get(FONT_SIZE_SMALL));
 	mVersion.setColor(0x5E5E5EFF);
 	//mVersion.setText("EMULATIONSTATION V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) + buildDate);
-	mVersion.setText("EMULATIONSTATION V2.90RP-DEV\nGame Case，最好的复刻版GBA");
+	mVersion.setText("EMULATIONSTATION V2.90RP-DEV\nhttps://github.com/ln93/EmulationStation-zhcn/");
 	mVersion.setHorizontalAlignment(ALIGN_CENTER);
 	addChild(&mVersion);
 }

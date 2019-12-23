@@ -190,7 +190,7 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
 		// check if the hotkey enable button is set. if not prompt the user to use select or nothing.
 		Input input;
-		if (!mTargetConfig->getInputByName("辅助功能键", &input)) {
+		if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
 			mWindow->pushGui(new GuiMsgBox(mWindow,
 				"你忘了设置辅助功能键，将无法正常退出游戏。 是否需要系统为你设置其为SELECT？ 如果你看不懂，请选“是”。",
 				"是", [this, okFunction] {

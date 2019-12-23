@@ -401,7 +401,7 @@ void GuiMenu::openOtherSettings()
 	});
 
 	// gamelists
-	auto gamelistsSaveMode = std::make_shared< OptionListComponent<std::string> >(mWindow, "SAVE METADATA", false);
+	auto gamelistsSaveMode = std::make_shared< OptionListComponent<std::string> >(mWindow, "何时保存游戏列表", false);
 	std::vector<std::string> saveModes;
 	saveModes.push_back("on exit");
 	saveModes.push_back("always");
@@ -409,14 +409,14 @@ void GuiMenu::openOtherSettings()
 
 	for(auto it = saveModes.cbegin(); it != saveModes.cend(); it++)
 		gamelistsSaveMode->add(*it, *it, Settings::getInstance()->getString("SaveGamelistsMode") == *it);
-	s->addWithLabel("SAVE METADATA", gamelistsSaveMode);
+	s->addWithLabel("何时保存游戏列表", gamelistsSaveMode);
 	s->addSaveFunc([gamelistsSaveMode] {
 		Settings::getInstance()->setString("SaveGamelistsMode", gamelistsSaveMode->getSelected());
 	});
 
 	auto parse_gamelists = std::make_shared<SwitchComponent>(mWindow);
 	parse_gamelists->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));
-	s->addWithLabel("不使用自动游戏列表", parse_gamelists);
+	s->addWithLabel("仅识别游戏列表内的游戏", parse_gamelists);
 	s->addSaveFunc([parse_gamelists] { Settings::getInstance()->setBool("ParseGamelistOnly", parse_gamelists->getState()); });
 
 	auto local_art = std::make_shared<SwitchComponent>(mWindow);

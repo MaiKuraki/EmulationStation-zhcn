@@ -480,7 +480,8 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=(int)Math::round(year->getValue())*10000+settime->tm_mon*100+settime->tm_mday;
-		system("sudo date -s "+std::to_string(timeday));
+		string str="sudo date -s "+std::to_string(timeday);
+		system(str.c_str());
 	});
 
 	//set month
@@ -493,7 +494,8 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=settime->tm_year*10000+(int)Math::round(month->getValue())*100+settime->tm_mday;
-		system("sudo date -s "+std::to_string(timeday));
+		string str="sudo date -s "+std::to_string(timeday);
+		system(str.c_str());
 	});
 	//set day
 	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, "日");
@@ -505,6 +507,8 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=settime->tm_year*10000+settime->tm_mon*100+(int)Math::round(mday->getValue());
+		string str="sudo date -s "+std::to_string(timeday);
+		system(str.c_str());
 		
 	});
 	//set hour
@@ -517,7 +521,8 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		settime->tm_hour = (int)Math::round(hour->getValue());
-		system("sudo date -s "+std::to_string((int)Math::round(hour->getValue()))+":"+std::to_string(settime->tm_min)+":00");
+		string str="sudo date -s "+std::to_string((int)Math::round(hour->getValue()))+":"+std::to_string(settime->tm_min)+":00";
+		system(str.c_str());
 	});
 	//set min
 	auto minute = std::make_shared<SliderComponent>(mWindow, 1.f, 59.f, 1.f, "分");
@@ -529,7 +534,8 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		settime->tm_min = (int)Math::round(minute->getValue());
-		system("sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00");
+		string str="sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00";
+		system(str.c_str());
 	});
 //#endif
 	mWindow->pushGui(s);

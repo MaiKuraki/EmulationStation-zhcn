@@ -479,21 +479,21 @@ void GuiMenu::openOtherSettings()
 		struct tm *settime = NULL;
 		time(&timeset);
 		settime = localtime(&timeset);
-		int timeday=(int)Math::round(year->getValue())*10000+settime->tm_mon*100+settime->tm_mday;
+		int timeday=(int)Math::round(year->getValue())*10000+(settime->tm_mon+1)*100+settime->tm_mday;
 		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 	});
 
 	//set month
 	auto month = std::make_shared<SliderComponent>(mWindow, 1.f, 12.f, 1.f, "月");
-	month->setValue((float)(curr_time->tm_mon));
+	month->setValue((float)(curr_time->tm_mon+1));
 	s->addWithLabel("设置月份", month);
 	s->addSaveFunc([month] {
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
 		settime = localtime(&timeset);
-		int timeday=settime->tm_year*10000+(int)Math::round(month->getValue())*100+settime->tm_mday;
+		int timeday=(1900+settime->tm_year)*10000+(int)Math::round(month->getValue())*100+settime->tm_mday;
 		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 	});
@@ -506,7 +506,7 @@ void GuiMenu::openOtherSettings()
 		struct tm *settime = NULL;
 		time(&timeset);
 		settime = localtime(&timeset);
-		int timeday=settime->tm_year*10000+settime->tm_mon*100+(int)Math::round(mday->getValue());
+		int timeday=(1900+settime->tm_year)*10000+(settime->tm_mon+1)*100+(int)Math::round(mday->getValue());
 		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 		

@@ -20,6 +20,11 @@
 #include <algorithm>
 #include "platform.h"
 
+
+#ifdef _RPI_
+#include "time.h"
+#endif
+
 GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "主菜单"), mVersion(window)
 {
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
@@ -457,6 +462,80 @@ void GuiMenu::openOtherSettings()
 	s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate", framerate->getState()); });
 
 
+#ifdef _RPI_
+	// time set
+	// get time
+	time_t time_now;
+	struct tm *curr_time = NULL;
+	time(&time_now);
+	curr_time = gmtime(&time_now);
+	//set year
+	auto year = std::make_shared<SliderComponent>(mWindow, 1970.f, 2099.f, 1.f, "年");
+	year->setValue((float)(curr_time->tm_year + 1900));
+	s->addWithLabel("设置年份", year);
+	s->addSaveFunc([year] {
+		time_t timeset;
+		struct tm *settime = NULL;
+		time(&timeset);
+		settime = gmtime(&timeset);
+		settime->tm_year = (int)Math::round(year->getValue()) - 1970;
+		timeset=mktime(settime);
+		stime(&timeset);
+	});
+
+	//set month
+	auto month = std::make_shared<SliderComponent>(mWindow, 1.f, 12.f, 1.f, "月");
+	month->setValue((float)(curr_time->tm_mon));
+	s->addWithLabel("设置月份", month);
+	s->addSaveFunc([month] {
+		time_t timeset;
+		struct tm *settime = NULL;
+		time(&timeset);
+		settime = gmtime(&timeset);
+		settime->tm_mon = (int)Math::round(month->getValue());
+		timeset=mktime(settime);
+		stime(&timeset);
+	});
+	//set day
+	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, "日");
+	mday ->setValue((float)(curr_time->tm_mday));
+	s->addWithLabel("设置日期", mday);
+	s->addSaveFunc([mday] {
+		time_t timeset;
+		struct tm *settime = NULL;
+		time(&timeset);
+		settime = gmtime(&timeset);
+		settime->tm_mday = (int)Math::round(mday->getValue());
+		timeset=mktime(settime);
+		stime(&timeset);
+	});
+	//set hour
+	auto hour = std::make_shared<SliderComponent>(mWindow, 1.f, 23.f, 1.f, "时");
+	hour ->setValue((float)(curr_time->tm_hour));
+	s->addWithLabel("设置小时", hour);
+	s->addSaveFunc([hour] {
+		time_t timeset;
+		struct tm *settime = NULL;
+		time(&timeset);
+		settime = gmtime(&timeset);
+		settime->tm_hour = (int)Math::round(hour->getValue());
+		timeset=mktime(settime);
+		stime(&timeset);
+	});
+	//set min
+	auto minute = std::make_shared<SliderComponent>(mWindow, 1.f, 23.f, 1.f, "时");
+	hour ->setValue((float)(curr_time->tm_min));
+	s->addWithLabel("设置分钟", minute);
+	s->addSaveFunc([minute] {
+		time_t timeset;
+		struct tm *settime = NULL;
+		time(&timeset);
+		settime = gmtime(&timeset);
+		settime->tm_min = (int)Math::round(min->getValue());
+		timeset=mktime(settime);
+		stime(&timeset);
+	});
+#endif
 	mWindow->pushGui(s);
 
 }

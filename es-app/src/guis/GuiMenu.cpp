@@ -480,7 +480,7 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=(int)Math::round(year->getValue())*10000+settime->tm_mon*100+settime->tm_mday;
-		string str="sudo date -s "+std::to_string(timeday);
+		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 	});
 
@@ -494,7 +494,7 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=settime->tm_year*10000+(int)Math::round(month->getValue())*100+settime->tm_mday;
-		string str="sudo date -s "+std::to_string(timeday);
+		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 	});
 	//set day
@@ -507,7 +507,7 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		int timeday=settime->tm_year*10000+settime->tm_mon*100+(int)Math::round(mday->getValue());
-		string str="sudo date -s "+std::to_string(timeday);
+		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());
 		
 	});
@@ -521,7 +521,7 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		settime->tm_hour = (int)Math::round(hour->getValue());
-		string str="sudo date -s "+std::to_string((int)Math::round(hour->getValue()))+":"+std::to_string(settime->tm_min)+":00";
+		std::string str="sudo date -s "+std::to_string((int)Math::round(hour->getValue()))+":"+std::to_string(settime->tm_min)+":00";
 		system(str.c_str());
 	});
 	//set min
@@ -534,7 +534,7 @@ void GuiMenu::openOtherSettings()
 		time(&timeset);
 		settime = localtime(&timeset);
 		settime->tm_min = (int)Math::round(minute->getValue());
-		string str="sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00";
+		std::string str="sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00";
 		system(str.c_str());
 	});
 //#endif

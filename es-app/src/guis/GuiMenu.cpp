@@ -23,6 +23,7 @@
 
 //#ifdef _RPI_
 #include "time.h"
+#include <stdlib.h>
 //#endif
 
 GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "主菜单"), mVersion(window)

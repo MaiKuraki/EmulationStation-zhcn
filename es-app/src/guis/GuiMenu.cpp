@@ -531,7 +531,7 @@ void GuiMenu::openOtherSettings()
 		struct tm *settime = NULL;
 		time(&timeset);
 		settime = gmtime(&timeset);
-		settime->tm_min = (int)Math::round(min->getValue());
+		settime->tm_min = (int)Math::round(minute->getValue());
 		timeset=mktime(settime);
 		stime(&timeset);
 	});

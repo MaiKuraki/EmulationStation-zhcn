@@ -21,9 +21,9 @@
 #include "platform.h"
 
 
-#ifdef _RPI_
+//#ifdef _RPI_
 #include "time.h"
-#endif
+//#endif
 
 GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "主菜单"), mVersion(window)
 {
@@ -462,7 +462,7 @@ void GuiMenu::openOtherSettings()
 	s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate", framerate->getState()); });
 
 
-#ifdef _RPI_
+//#ifdef _RPI_
 	// time set
 	// get time
 	time_t time_now;
@@ -535,7 +535,7 @@ void GuiMenu::openOtherSettings()
 		timeset=mktime(settime);
 		stime(&timeset);
 	});
-#endif
+//#endif
 	mWindow->pushGui(s);
 
 }

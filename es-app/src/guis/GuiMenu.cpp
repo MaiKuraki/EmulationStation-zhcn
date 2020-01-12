@@ -468,7 +468,7 @@ void GuiMenu::openOtherSettings()
 	time_t time_now;
 	struct tm *curr_time = NULL;
 	time(&time_now);
-	curr_time = gmtime(&time_now);
+	curr_time = localtime(&time_now);
 	//set year
 	auto year = std::make_shared<SliderComponent>(mWindow, 1970.f, 2099.f, 1.f, "年");
 	year->setValue((float)(curr_time->tm_year + 1900));
@@ -477,10 +477,9 @@ void GuiMenu::openOtherSettings()
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
-		settime = gmtime(&timeset);
-		settime->tm_year = (int)Math::round(year->getValue()) - 1970;
-		timeset=mktime(settime);
-		stime(&timeset);
+		settime = localtime(&timeset);
+		int timeday=(int)Math::round(year->getValue())*10000+settime->tm_mon*100+settime->tm_mday;
+		system("sudo date -s "+std::to_string(timeday));
 	});
 
 	//set month
@@ -491,10 +490,9 @@ void GuiMenu::openOtherSettings()
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
-		settime = gmtime(&timeset);
-		settime->tm_mon = (int)Math::round(month->getValue());
-		timeset=mktime(settime);
-		stime(&timeset);
+		settime = localtime(&timeset);
+		int timeday=settime->tm_year*10000+(int)Math::round(month->getValue())*100+settime->tm_mday;
+		system("sudo date -s "+std::to_string(timeday));
 	});
 	//set day
 	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, "日");
@@ -504,10 +502,9 @@ void GuiMenu::openOtherSettings()
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
-		settime = gmtime(&timeset);
-		settime->tm_mday = (int)Math::round(mday->getValue());
-		timeset=mktime(settime);
-		stime(&timeset);
+		settime = localtime(&timeset);
+		int timeday=settime->tm_year*10000+settime->tm_mon*100+(int)Math::round(mday->getValue());
+		
 	});
 	//set hour
 	auto hour = std::make_shared<SliderComponent>(mWindow, 1.f, 23.f, 1.f, "时");
@@ -517,23 +514,21 @@ void GuiMenu::openOtherSettings()
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
-		settime = gmtime(&timeset);
+		settime = localtime(&timeset);
 		settime->tm_hour = (int)Math::round(hour->getValue());
-		timeset=mktime(settime);
-		stime(&timeset);
+		system("sudo date -s "+std::to_string((int)Math::round(hour->getValue()))+":"+std::to_string(settime->tm_min)+":00");
 	});
 	//set min
-	auto minute = std::make_shared<SliderComponent>(mWindow, 1.f, 60.f, 1.f, "分");
+	auto minute = std::make_shared<SliderComponent>(mWindow, 1.f, 59.f, 1.f, "分");
 	minute->setValue((float)(curr_time->tm_min));
 	s->addWithLabel("设置分钟", minute);
 	s->addSaveFunc([minute] {
 		time_t timeset;
 		struct tm *settime = NULL;
 		time(&timeset);
-		settime = gmtime(&timeset);
+		settime = localtime(&timeset);
 		settime->tm_min = (int)Math::round(minute->getValue());
-		timeset=mktime(settime);
-		stime(&timeset);
+		system("sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00");
 	});
 //#endif
 	mWindow->pushGui(s);

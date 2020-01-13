@@ -6,6 +6,7 @@ This is a fork from EmulationStation for RetroPie, intend to translate it to Sim
 Meanwhile, I modified some code to fit my need.
 - Add timeset function in the menu.
 - Disable jumpto function when find Chinese Rom name.
+- fix weird knob position in SliderComponent when value is huge.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 

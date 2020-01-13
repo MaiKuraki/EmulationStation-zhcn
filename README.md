@@ -4,9 +4,9 @@ EmulationStation
 This is a fork from EmulationStation for RetroPie, intend to translate it to Simplified Chinese.
 
 Meanwhile, I modified some code to fit my need.
-- Add timeset function in the menu(linux only, by calling "sudo date -s").
-- Disable jumpto function when find Chinese Rom name.
-- fix weird knob position in SliderComponent when value is huge.
+- Add timeset function in the menu (Linux only, by calling "sudo date -s inserttimehere").
+- Disable "Jump to..." function when find Chinese Rom name.
+- Fix weird knob position in SliderComponent when value is huge.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 

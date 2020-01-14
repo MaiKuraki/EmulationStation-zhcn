@@ -512,7 +512,7 @@ void GuiMenu::openOtherSettings()
 		
 	});
 	//set hour
-	auto hour = std::make_shared<SliderComponent>(mWindow, 1.f, 23.f, 1.f, "时");
+	auto hour = std::make_shared<SliderComponent>(mWindow, 0.f, 23.f, 1.f, "时");
 	hour->setValue((float)(curr_time->tm_hour));
 	s->addWithLabel("设置小时", hour);
 	s->addSaveFunc([hour] {
@@ -525,7 +525,7 @@ void GuiMenu::openOtherSettings()
 		system(str.c_str());
 	});
 	//set min
-	auto minute = std::make_shared<SliderComponent>(mWindow, 1.f, 59.f, 1.f, "分");
+	auto minute = std::make_shared<SliderComponent>(mWindow, 0.f, 59.f, 1.f, "分");
 	minute->setValue((float)(curr_time->tm_min));
 	s->addWithLabel("设置分钟", minute);
 	s->addSaveFunc([minute] {

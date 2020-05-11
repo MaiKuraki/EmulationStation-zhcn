@@ -13,6 +13,36 @@ EmulationStation is a cross-platform graphical front-end for emulators with cont
 
 If you find something wrong, feel free to pull requests.
 
+Install on RetroPie Device
+========
+Modify /home/pi/RetroPie/RetroPie-Setup/scriptmodules/supplementary/emulationstation.sh
+
+find
+
+```bash
+ [[ -z "$repo" ]] && repo="https://github.com/RetroPie/EmulationStation"
+    if [[ -z "$branch" ]]; then
+        if compareVersions "$__os_debian_ver" gt 8; then
+            branch="stable"
+        else
+            branch="v2.7.6"
+        fi
+    fi
+```
+
+and change them to
+
+```bash
+ [[ -z "$repo" ]] && repo="https://github.com/ln93/EmulationStation-zhcn"
+    if [[ -z "$branch" ]]; then
+        if compareVersions "$__os_debian_ver" gt 8; then
+            branch="zh-cn"
+        else
+            branch="v2.7.6"
+        fi
+    fi
+```
+Then you can use RetroPie-Setup Scripts to upgrade Emulationstation from source to get Chinese support.
 
 Building
 ========

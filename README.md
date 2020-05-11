@@ -5,7 +5,7 @@ This is a fork from EmulationStation for RetroPie, intend to translate it to Sim
 
 Meanwhile, I modified some code to fit my need.
 - Add timeset function in the menu (Linux only, by calling "sudo date -s inserttimehere").
-- Disable "Jump to..." function when find Chinese Rom name.
+- Disable "Jump to..." function when only find non-ASCII Rom name to avoid ES crash.
 - Fix weird knob position in SliderComponent when value is huge.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.

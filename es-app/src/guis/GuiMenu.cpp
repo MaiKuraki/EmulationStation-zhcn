@@ -375,7 +375,7 @@ void GuiMenu::openUISettings()
 	// hide start menu in Kid Mode
 	auto disable_start = std::make_shared<SwitchComponent>(mWindow);
 	disable_start->setState(Settings::getInstance()->getBool("DisableKidStartMenu"));
-	s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
+	s->addWithLabel("在KID（儿童）模式下禁用设置菜单", disable_start);
 	s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu", disable_start->getState()); });
 
 	mWindow->pushGui(s);

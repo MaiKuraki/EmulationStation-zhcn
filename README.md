@@ -7,11 +7,34 @@ Meanwhile, I modified some code to fit my need.
 - Add timeset function in the menu (Linux only, by calling "sudo date -s inserttimehere").
 - Disable "Jump to..." function when only find non-ASCII Rom name to avoid ES crash.
 - Fix weird knob position in SliderComponent when value is huge.
+- Support Battery percent (or wifi signal, vol, etc.) display.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 
 
 If you find something wrong, feel free to pull requests.
+
+New Feature
+========
+Add such thing like
+
+      <image name="batteryShell" extra="true"><!--lblogo-->
+         <pos>0.025 0.9265</pos>
+         <size>0.1 0.0675</size>     
+         <path>./assets/images/battery.png</path>
+      </image> 
+      <image name="batteryBar" extra="true"><!--lblogo-->
+         <pos>0.0440 0.94</pos>
+         <size>0.072 0.042</size> 
+         <battery>find /sys/ -name capacity -exec cat {} \;</battery>      
+         <path>./assets/images/batterycore.png</path>
+      </image> 
+
+in the theme.xml,the ES would exec 
+
+	find /sys/ -name capacity -exec cat {} \;
+
+to get battery info, and modify the width of batteryBar.
 
 Install on RetroPie Device
 ========

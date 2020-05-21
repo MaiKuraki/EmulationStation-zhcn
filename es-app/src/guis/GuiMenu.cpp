@@ -469,15 +469,17 @@ void GuiMenu::openOtherSettings()
 	s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate", framerate->getState()); });
 
 
-//#ifdef _RPI_
-
+#if defined(__linux__)
+	//timeset 
+	//using date -s
 	ComponentListRow timesetting_row;
 	timesetting_row.addElement(std::make_shared<TextComponent>(mWindow, "系统时间设置", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	timesetting_row.addElement(makeArrow(mWindow), false);
 	timesetting_row.makeAcceptInputHandler(std::bind(&GuiMenu::openTimeSettings, this));
 	s->addRow(timesetting_row);
+#endif
 	mWindow->pushGui(s);
-//#endif
+
 
 }
 void GuiMenu::openTimeSettings()

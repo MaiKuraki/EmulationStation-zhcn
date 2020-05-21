@@ -424,7 +424,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 	{
 		if(elem->has("size"))
 		{
-			
+			#if defined(__linux__)
 			if(elem->has("battery"))
 			{
 				char battery[1024]={0};
@@ -436,6 +436,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 				setResize(elem->get<Vector2f>("size") * scaleBattery);
 			}
 			else
+			#endif
 			{
 				setResize(elem->get<Vector2f>("size") * scale);
 			}

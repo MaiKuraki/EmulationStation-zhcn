@@ -30,7 +30,7 @@ Add such thing like
          <path>./assets/images/batterycore.png</path>
       </image> 
 
-in the theme.xml,the ES would exec 
+in the theme.xml, the ES would exec 
 
 	find /sys/ -name capacity -exec cat {} \;
 

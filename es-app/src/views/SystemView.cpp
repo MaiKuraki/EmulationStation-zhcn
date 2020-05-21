@@ -129,9 +129,6 @@ void SystemView::populate()
 void SystemView::goToSystem(SystemData* system, bool animate)
 {
 	setCursor(system);
-	//when gotosystem,refresh battery infomation
-	populate();
-	//
 	if(!animate)
 		finishAnimation(0);
 }
@@ -684,7 +681,11 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
 
 void SystemView::onShow()
 {
+	//when you exit the game, refresh battery info.
+	populate();
+	//
 	mShowing = true;
+	
 }
 
 void SystemView::onHide()

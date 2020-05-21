@@ -470,8 +470,21 @@ void GuiMenu::openOtherSettings()
 
 
 //#ifdef _RPI_
-	// time set
-	// get time
+
+	ComponentListRow timesetting_row;
+	timesetting_row.addElement(std::make_shared<TextComponent>(mWindow, "系统时间设置", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	timesetting_row.addElement(makeArrow(mWindow), false);
+	timesetting_row.makeAcceptInputHandler(std::bind(&GuiMenu::openTimeSettings, this));
+	s->addRow(timesetting_row);
+	mWindow->pushGui(s);
+//#endif
+
+}
+void GuiMenu::openTimeSettings()
+{
+	auto timesetting = std::make_shared<SliderComponent>(mWindow, 0.f, 30.f, 1.f, "m");
+	Window* window = mWindow;
+	auto s = new GuiSettings(window, "系统时间设置");
 	time_t time_now;
 	struct tm *curr_time = NULL;
 	time(&time_now);
@@ -543,11 +556,10 @@ void GuiMenu::openOtherSettings()
 		std::string str="sudo date -s "+std::to_string(settime->tm_hour)+":"+std::to_string((int)Math::round(minute->getValue()))+":00";
 		system(str.c_str());
 	});
-//#endif
-	mWindow->pushGui(s);
+
+	window->pushGui(s);
 
 }
-
 void GuiMenu::openConfigInput()
 {
 	Window* window = mWindow;

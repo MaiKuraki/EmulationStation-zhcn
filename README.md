@@ -34,7 +34,7 @@ in the theme.xml,the ES would exec
 
 	find /sys/ -name capacity -exec cat {} \;
 
-to get battery info, and modify the width of batteryBar.
+to get battery info(0-100), and use it as percent to modify the width of batteryBar.
 
 Install on RetroPie Device
 ========

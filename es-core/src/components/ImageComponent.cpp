@@ -390,7 +390,24 @@ bool ImageComponent::hasImage()
 {
 	return (bool)mTexture;
 }
-
+void executeCMD(const char *cmd, char *result)
+{
+    char buf_ps[1024];
+    char ps[1024]={0};
+    FILE *ptr;
+    strcpy(ps, cmd);
+    if((ptr=popen(ps, "r"))!=NULL)
+    {
+        while(fgets(buf_ps, 1024, ptr)!=NULL)
+        {
+           strcat(result, buf_ps);
+           if(strlen(result)>1024)
+               break;
+        }
+        pclose(ptr);
+        ptr = NULL;
+    }
+}
 void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties)
 {
 	using namespace ThemeFlags;
@@ -406,7 +423,24 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 	if(properties & ThemeFlags::SIZE)
 	{
 		if(elem->has("size"))
-			setResize(elem->get<Vector2f>("size") * scale);
+		{
+			
+			if(elem->has("battery"))
+			{
+				char battery[1024]={0};
+				std::string batterycmd=elem->get<std::string>("battery");
+				executeCMD(batterycmd.data(),battery);
+				double batterypercent=atof(battery)/100.0;
+				Vector2f scaleBattery=scale;
+				scaleBattery.x()=scaleBattery.x()*batterypercent;
+				setResize(elem->get<Vector2f>("size") * scaleBattery);
+			}
+			else
+			{
+				setResize(elem->get<Vector2f>("size") * scale);
+			}
+			
+		}
 		else if(elem->has("maxSize"))
 			setMaxSize(elem->get<Vector2f>("maxSize") * scale);
 		else if(elem->has("minSize"))

@@ -129,7 +129,9 @@ void SystemView::populate()
 void SystemView::goToSystem(SystemData* system, bool animate)
 {
 	setCursor(system);
-
+	//when gotosystem,refresh battery infomation
+	populate();
+	//
 	if(!animate)
 		finishAnimation(0);
 }

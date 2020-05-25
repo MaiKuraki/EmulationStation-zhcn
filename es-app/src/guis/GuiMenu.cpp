@@ -505,7 +505,7 @@ void GuiMenu::openTimeSettings()
 	auto mday = std::make_shared<SliderComponent>(mWindow, 1.f, 31.f, 1.f, "日");
 	mday->setValue((float)(curr_time->tm_mday));
 	st->addWithLabel("设置日期", mday);
-	st->addSaveFunc([year,month,mday], {
+	st->addSaveFunc([year,month,mday] {
 		int timeday=(int)Math::round(year->getValue())*10000+(int)Math::round(month->getValue())*100+(int)Math::round(mday->getValue());
 		std::string str="sudo date -s "+std::to_string(timeday);
 		system(str.c_str());

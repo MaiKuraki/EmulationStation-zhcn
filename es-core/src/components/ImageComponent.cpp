@@ -12,11 +12,13 @@ void executeCMD(const char *cmd, char *result)
     strcpy(ps, cmd);
     if((ptr=popen(ps, "r"))!=NULL)
     {
-        while(fgets(buf_ps, 128, ptr)!=NULL)
+        //while(fgets(buf_ps, 128, ptr)!=NULL)
         {
-           strcat(result, buf_ps);
-           if(strlen(result)>128)
-               break;
+			fgets(buf_ps, 128, ptr);
+            //strcat(result, buf_ps);
+			strcpy(result,buf_ps);
+            //if(strlen(result)>128)
+            //s   break;
         }
         pclose(ptr);
         ptr = NULL;
@@ -357,11 +359,11 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			// when it finally loads
 
 			#if defined(__linux__)
-			if(isBar&&refreshCounter>refreshRate)
+			if(isBar&&refreshCounter>refreshRate+isBar)//use +isBar to avoid too much execute in one frame
 			{
 				char bar[128]={0};
 				executeCMD(barCMD.data(),bar);
-				double barPercent=atof(bar)/100.0;
+				double barPercent=(double)(atoi(bar))/100.0;
 				if(isBar>1)
 				{
 					mTopLeftCrop.y()=1-barPercent;

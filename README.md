@@ -38,7 +38,8 @@ Add such thing like
       <image name="soundbar" extra="true"><!--lblogo-->
          <pos>0.90 0.01</pos>
          <size>0.075 0.1</size> 
-         <bar>amixer | grep -o 'Left: Playback.*\]'|grep -o '\[.*%'|cut -c 2-3</bar>      
+         <bar>amixer | grep -o 'Left: Playback.*\]'|grep -o '\[.*%'|cut -c 2-3</bar>  
+	 <verticalBar>true</verticalBar>
          <path>./assets/images/soundbar.png</path>
       </image> 
 

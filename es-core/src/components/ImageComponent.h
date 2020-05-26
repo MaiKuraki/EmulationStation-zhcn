@@ -105,7 +105,7 @@ private:
 	bool mForceLoad;
 	bool mDynamic;
 	bool mRotateByTargetSize;
-	bool isBar = false;
+	int isBar = 0;//1:horizonbar 2:verticalbar
 	std::string barCMD;
 	int refreshRate = 60;
 	int refreshCounter = 0;

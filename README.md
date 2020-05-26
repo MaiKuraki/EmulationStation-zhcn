@@ -30,12 +30,24 @@ Add such thing like
          <bar>find /sys/ -name capacity -exec cat {} \;</bar>      
          <path>./assets/images/batterycore.png</path>
       </image> 
+            <image name="soundbg" extra="true"><!--lblogo-->
+         <pos>0.90 0.01</pos>
+         <size>0.075 0.1</size>     
+         <path>./assets/images/soundbg.png</path>
+      </image> 
+      <image name="soundbar" extra="true"><!--lblogo-->
+         <pos>0.90 0.01</pos>
+         <size>0.075 0.1</size> 
+         <bar>amixer | grep -o 'Left: Playback.*\]'|grep -o '\[.*%'|cut -c 2-3</bar>      
+         <path>./assets/images/soundbar.png</path>
+      </image> 
 
 in the theme.xml, the ES would exec 
 
 	find /sys/ -name capacity -exec cat {} \;
+    amixer | grep -o 'Left: Playback.*\]'|grep -o '\[.*%'|cut -c 2-3
 
-one time per sec to get battery info(0-100), and use it as percent to crop the width of batteryBar.
+one time per sec to get battery info(0-100) and sound level, and use it as percent to crop the width of batteryBar/soundbar.
 
 However，the command will slow down rendering. A wise way is to use "cat xxx" to speed up.  
 

@@ -362,7 +362,15 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 				char bar[1024]={0};
 				executeCMD(barCMD.data(),bar);
 				double barPercent=atof(bar)/100.0;
-				mBottomRightCrop.x()=barPercent;
+				if(isBar>1)
+				{
+					mTopLeftCrop.y()=1-barPercent;
+				}
+				else
+				{
+					mBottomRightCrop.x()=barPercent;
+				}
+				
 				updateVertices();
 				refreshCounter=0;
 			}
@@ -438,7 +446,16 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 		{
 			#if defined(__linux__)
 			if(elem->has("bar"))
-			{barCMD=elem->get<std::string>("bar");isBar=true;}	
+			{
+				barCMD=elem->get<std::string>("bar");
+					isBar=1;
+				if(elem->has("verticalBar"))
+				{
+					if(elem->get<bool>("verticalBar"))
+						isBar=2;
+				}
+
+			}	
 			#endif
 				setResize(elem->get<Vector2f>("size") * scale);
 			

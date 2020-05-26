@@ -364,6 +364,8 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 				char bar[128]={0};
 				executeCMD(barCMD.data(),bar);
 				double barPercent=(double)(atoi(bar))/100.0;
+				if(barPercent>1||barPercent<0)
+					barPercent=0.5;
 				if(isBar>1)
 				{
 					mTopLeftCrop.y()=1-barPercent;
@@ -373,7 +375,7 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 					mBottomRightCrop.x()=barPercent;
 				}
 				
-				//updateVertices();
+				updateVertices();
 				refreshCounter=0;
 			}
 			refreshCounter++;

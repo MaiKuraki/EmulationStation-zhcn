@@ -373,7 +373,7 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 					mBottomRightCrop.x()=barPercent;
 				}
 				
-				updateVertices();
+				//updateVertices();
 				refreshCounter=0;
 			}
 			refreshCounter++;

@@ -37,6 +37,8 @@ in the theme.xml, the ES would exec
 
 one time per sec to get battery info(0-100), and use it as percent to crop the width of batteryBar.
 
+However，the command will slow down rendering. A wise way is to use "cat xxx" to speed up.  
+
 Install on RetroPie Device
 ========
 Modify /home/pi/RetroPie/RetroPie-Setup/scriptmodules/supplementary/emulationstation.sh

@@ -6,16 +6,16 @@
 #include "ThemeData.h"
 void executeCMD(const char *cmd, char *result)
 {
-    char buf_ps[1024];
-    char ps[1024]={0};
+    char buf_ps[128];
+    char ps[128]={0};
     FILE *ptr;
     strcpy(ps, cmd);
     if((ptr=popen(ps, "r"))!=NULL)
     {
-        while(fgets(buf_ps, 1024, ptr)!=NULL)
+        while(fgets(buf_ps, 128, ptr)!=NULL)
         {
            strcat(result, buf_ps);
-           if(strlen(result)>1024)
+           if(strlen(result)>128)
                break;
         }
         pclose(ptr);
@@ -359,7 +359,7 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			#if defined(__linux__)
 			if(isBar&&refreshCounter>refreshRate)
 			{
-				char bar[1024]={0};
+				char bar[128]={0};
 				executeCMD(barCMD.data(),bar);
 				double barPercent=atof(bar)/100.0;
 				if(isBar>1)

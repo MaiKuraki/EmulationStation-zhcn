@@ -30,7 +30,7 @@ Add such thing like
          <bar>find /sys/ -name capacity -exec cat {} \;</bar>      
          <path>./assets/images/batterycore.png</path>
       </image> 
-            <image name="soundbg" extra="true"><!--lblogo-->
+         <image name="soundbg" extra="true"><!--lblogo-->
          <pos>0.90 0.01</pos>
          <size>0.075 0.1</size>     
          <path>./assets/images/soundbg.png</path>

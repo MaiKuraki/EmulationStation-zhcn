@@ -28,7 +28,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
 		{ "colorEnd", COLOR },
 		{ "gradientType", STRING },
 		{ "visible", BOOLEAN },
-		{ "battery", STRING },
+		{ "bar", STRING },
 		{ "zIndex", FLOAT } } },
 	{ "imagegrid", {
 		{ "pos", NORMALIZED_PAIR },

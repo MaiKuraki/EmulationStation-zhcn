@@ -4,7 +4,24 @@
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
-
+void executeCMD(const char *cmd, char *result)
+{
+    char buf_ps[1024];
+    char ps[1024]={0};
+    FILE *ptr;
+    strcpy(ps, cmd);
+    if((ptr=popen(ps, "r"))!=NULL)
+    {
+        while(fgets(buf_ps, 1024, ptr)!=NULL)
+        {
+           strcat(result, buf_ps);
+           if(strlen(result)>1024)
+               break;
+        }
+        pclose(ptr);
+        ptr = NULL;
+    }
+}
 Vector2i ImageComponent::getTextureSize() const
 {
 	if(mTexture)
@@ -338,6 +355,19 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			// The bind() function returns false if the texture is not currently loaded. A blank
 			// texture is bound in this case but we want to handle a fade so it doesn't just 'jump' in
 			// when it finally loads
+
+			#if defined(__linux__)
+			if(isBar&&refreshCounter>refreshRate)
+			{
+				char bar[1024]={0};
+				executeCMD(barCMD.data(),bar);
+				double barPercent=atof(bar)/100.0;
+				mBottomRightCrop.x()=barPercent;
+				updateVertices();
+				refreshCounter=0;
+			}
+			refreshCounter++;
+			#endif
 			fadeIn(mTexture->bind());
 			Renderer::drawTriangleStrips(&mVertices[0], 4);
 
@@ -390,24 +420,6 @@ bool ImageComponent::hasImage()
 {
 	return (bool)mTexture;
 }
-void executeCMD(const char *cmd, char *result)
-{
-    char buf_ps[1024];
-    char ps[1024]={0};
-    FILE *ptr;
-    strcpy(ps, cmd);
-    if((ptr=popen(ps, "r"))!=NULL)
-    {
-        while(fgets(buf_ps, 1024, ptr)!=NULL)
-        {
-           strcat(result, buf_ps);
-           if(strlen(result)>1024)
-               break;
-        }
-        pclose(ptr);
-        ptr = NULL;
-    }
-}
 void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties)
 {
 	using namespace ThemeFlags;
@@ -425,21 +437,10 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 		if(elem->has("size"))
 		{
 			#if defined(__linux__)
-			if(elem->has("battery"))
-			{
-				char battery[1024]={0};
-				std::string batterycmd=elem->get<std::string>("battery");
-				executeCMD(batterycmd.data(),battery);
-				double batterypercent=atof(battery)/100.0;
-				Vector2f scaleBattery=scale;
-				scaleBattery.x()=scaleBattery.x()*batterypercent;
-				setResize(elem->get<Vector2f>("size") * scaleBattery);
-			}
-			else
+			if(elem->has("bar"))
+			{barCMD=elem->get<std::string>("bar");isBar=true;}	
 			#endif
-			{
 				setResize(elem->get<Vector2f>("size") * scale);
-			}
 			
 		}
 		else if(elem->has("maxSize"))

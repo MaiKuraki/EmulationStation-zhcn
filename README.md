@@ -8,7 +8,7 @@ Meanwhile, I modified some code to fit my need.
 - Disable "Jump to..." function when only find non-ASCII Rom name to avoid ES crash.
 - Fix weird knob position in SliderComponent when value is huge.
 - Fix SliderComponent would cause controller's hat stuck when a SliderComponet isn't on the top of menu.
-- Support Battery percent (or wifi signal, vol, etc.) display.
+- Support Battery percent (or wifi signal, vol, anything like a bar.) display.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 
@@ -27,7 +27,7 @@ Add such thing like
       <image name="batteryBar" extra="true"><!--lblogo-->
          <pos>0.0440 0.94</pos>
          <size>0.072 0.042</size> 
-         <battery>find /sys/ -name capacity -exec cat {} \;</battery>      
+         <bar>find /sys/ -name capacity -exec cat {} \;</bar>      
          <path>./assets/images/batterycore.png</path>
       </image> 
 
@@ -35,7 +35,7 @@ in the theme.xml, the ES would exec
 
 	find /sys/ -name capacity -exec cat {} \;
 
-to get battery info(0-100), and use it as percent to modify the width of batteryBar.
+one time per sec to get battery info(0-100), and use it as percent to crop the width of batteryBar.
 
 Install on RetroPie Device
 ========

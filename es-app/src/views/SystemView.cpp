@@ -681,9 +681,7 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
 
 void SystemView::onShow()
 {
-	//when you exit the game, refresh battery info.
-	populate();
-	//
+
 	mShowing = true;
 	
 }

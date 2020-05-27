@@ -105,11 +105,14 @@ private:
 	bool mForceLoad;
 	bool mDynamic;
 	bool mRotateByTargetSize;
-	int isBar = 0;//1:horizonbar 2:verticalbar
+#if defined(__linux__)
+	int isBar = 0; //1:horizonbar 2:verticalbar
 	std::string barCMD;
-	char bar[128]={0};
+	char bar[128] = {0};
 	int refreshRate = 60;
 	int refreshCounter = 0;
+	static void executeCMD(const char *cmd, char *result);
+#endif
 
 	Vector2f mTopLeftCrop;
 	Vector2f mBottomRightCrop;

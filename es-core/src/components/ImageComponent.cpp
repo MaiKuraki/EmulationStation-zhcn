@@ -5,7 +5,8 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
-void executeCMD(const char *cmd, char *result)
+#if defined(__linux__)
+void ImageComponent::executeCMD(const char *cmd, char *result)
 {
     char buf_ps[128]={0};
     char ps[128]={0};
@@ -25,6 +26,7 @@ void executeCMD(const char *cmd, char *result)
         ptr = NULL;
     }
 }
+#endif
 Vector2i ImageComponent::getTextureSize() const
 {
 	if(mTexture)
@@ -359,28 +361,28 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			// texture is bound in this case but we want to handle a fade so it doesn't just 'jump' in
 			// when it finally loads
 
-			#if defined(__linux__)
-			if(isBar&&refreshCounter>refreshRate+isBar)//use +isBar to avoid too much execute in one frame
+#if defined(__linux__)
+			if (isBar && refreshCounter > refreshRate + isBar) //use +isBar to avoid too much execute in one frame
 			{
-				std::thread th(executeCMD,barCMD.data(),bar);
+				std::thread th(executeCMD, barCMD.data(), bar);
 				th.detach();
-				double barPercent=(double)(atoi(bar))/100.0;
-				if(barPercent>1||barPercent<0)
-					barPercent=0.5;
-				if(isBar>1)
+				double barPercent = (double)(atoi(bar)) / 100.0;
+				if (barPercent > 1 || barPercent < 0)
+					barPercent = 0.5;
+				if (isBar > 1)
 				{
-					mTopLeftCrop.y()=1-barPercent;
+					mTopLeftCrop.y() = 1 - barPercent;
 				}
 				else
 				{
-					mBottomRightCrop.x()=barPercent;
+					mBottomRightCrop.x() = barPercent;
 				}
-				
+
 				updateVertices();
-				refreshCounter=0;
+				refreshCounter = 0;
 			}
 			refreshCounter++;
-			#endif
+#endif
 			fadeIn(mTexture->bind());
 			Renderer::drawTriangleStrips(&mVertices[0], 4);
 
@@ -449,20 +451,19 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 	{
 		if(elem->has("size"))
 		{
-			#if defined(__linux__)
-			if(elem->has("bar"))
+#if defined(__linux__)
+			if (elem->has("bar"))
 			{
-				barCMD=elem->get<std::string>("bar");
-					isBar=1;
-				if(elem->has("verticalBar"))
+				barCMD = elem->get<std::string>("bar");
+				isBar = 1;
+				if (elem->has("verticalBar"))
 				{
-					if(elem->get<bool>("verticalBar"))
-						isBar=2;
+					if (elem->get<bool>("verticalBar"))
+						isBar = 2;
 				}
-
-			}	
-			#endif
-				setResize(elem->get<Vector2f>("size") * scale);
+			}
+#endif
+			setResize(elem->get<Vector2f>("size") * scale);
 			
 		}
 		else if(elem->has("maxSize"))

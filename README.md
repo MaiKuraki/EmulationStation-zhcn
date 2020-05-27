@@ -50,7 +50,7 @@ in the theme.xml, the ES would exec
 
 one time per sec to get battery info(0-100) and sound level, and use it as percent to crop the width of batteryBar/soundbar.
 
-The command is multithreaded, but weird command (slower than 1 sec, e.g: find) may still slow down rendering. A wise way is to use something like "cat xxx" to speed up.  
+The command is multithreaded, but weird command (slower than 1 sec, e.g: find) is still a bad choice. A wise way is to use something like "cat xxx" to speed up.  
 
 Install on RetroPie Device
 ========

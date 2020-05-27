@@ -6,8 +6,8 @@ This is a fork from EmulationStation for RetroPie, intend to translate it to Sim
 Meanwhile, I modified some code to fit my need.
 - Add timeset function in the menu (Linux only, by calling "sudo date -s inserttimehere").
 - Disable "Jump to..." function when only find non-ASCII Rom name to avoid ES crash.
-- Fix weird knob position in SliderComponent when value is huge.
-- Fix SliderComponent would cause controller's hat stuck when a SliderComponet isn't on the top of menu.
+- Fix a bug that knob position in SliderComponent is weird when value is huge.
+- Fix a bug that SliderComponent would cause controller's hat stuck when a SliderComponet isn't on the top of menu.
 - Support Battery percent (or wifi signal, vol, anything like a bar.) display.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.

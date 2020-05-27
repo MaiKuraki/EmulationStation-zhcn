@@ -24,7 +24,7 @@ Add such thing like
          <size>0.1 0.0675</size>     
          <path>./assets/images/battery.png</path>
       </image> 
-      <image name="batteryBar" extra="true"><!--lblogo-->
+      <image name="batterybar" extra="true"><!--lblogo-->
          <pos>0.0440 0.94</pos>
          <size>0.072 0.042</size> 
          <bar>find /sys/ -name capacity -exec cat {} \;</bar>      
@@ -48,7 +48,7 @@ in the theme.xml, the ES would exec
 	find /sys/ -name capacity -exec cat {} \;
     amixer | grep -o 'Left: Playback.*\]'|grep -o '\[.*%'|cut -c 2-3
 
-one time per sec to get battery info(0-100) and sound level, and use it as percent to crop the width of batteryBar/soundbar.
+one time per sec to get battery info(0-100) and sound level, and use it as percent to crop the width of batterybar/height of soundbar.
 
 The command is multithreaded and won't slow down rendering. But weird command (slower than 1 sec, e.g: find) is still a bad choice. A wise way is to use something like "cat xxx" to speed up.  
 

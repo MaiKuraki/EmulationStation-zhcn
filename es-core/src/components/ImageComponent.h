@@ -107,6 +107,7 @@ private:
 	bool mRotateByTargetSize;
 	int isBar = 0;//1:horizonbar 2:verticalbar
 	std::string barCMD;
+	char bar[128]={0};
 	int refreshRate = 60;
 	int refreshCounter = 0;
 

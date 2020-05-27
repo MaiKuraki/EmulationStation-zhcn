@@ -1,9 +1,10 @@
+#include <thread>
 #include "components/ImageComponent.h"
-
 #include "resources/TextureResource.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
+
 void executeCMD(const char *cmd, char *result)
 {
     char buf_ps[128];
@@ -361,8 +362,8 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			#if defined(__linux__)
 			if(isBar&&refreshCounter>refreshRate+isBar)//use +isBar to avoid too much execute in one frame
 			{
-				char bar[128]={0};
-				executeCMD(barCMD.data(),bar);
+				std::thread th(executeCMD,barCMD.data(),bar);
+				th.detach();
 				double barPercent=(double)(atoi(bar))/100.0;
 				if(barPercent>1||barPercent<0)
 					barPercent=0.5;

@@ -7,7 +7,7 @@
 
 void executeCMD(const char *cmd, char *result)
 {
-    char buf_ps[128];
+    char buf_ps[128]={0};
     char ps[128]={0};
     FILE *ptr;
     strcpy(ps, cmd);
@@ -17,7 +17,7 @@ void executeCMD(const char *cmd, char *result)
         {
 			fgets(buf_ps, 128, ptr);
             //strcat(result, buf_ps);
-			strcpy(result,buf_ps);
+			memcpy(result,buf_ps,128);
             //if(strlen(result)>128)
             //s   break;
         }

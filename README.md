@@ -7,7 +7,7 @@ Meanwhile, I modified some code to fit my need.
 - Add timeset function in the menu (Linux only, by calling "sudo date -s inserttimehere").
 - Disable "Jump to..." function when only find non-ASCII Rom name to avoid ES crash.
 - Fix a bug that knob position in SliderComponent is weird when value is huge.
-- Fix a bug that SliderComponent would cause controller's hat stuck when a SliderComponet isn't on the top of menu.
+- Fix a bug that SliderComponent would cause controller's hat stuck when a SliderComponet isn't on the first row of menu.
 - Support Battery percent (or wifi signal, vol, anything like a bar.) display.
 
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.

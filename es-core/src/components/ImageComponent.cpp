@@ -6,7 +6,7 @@
 #include "ThemeData.h"
 
 #if defined(__linux__)
-void ImageComponent::executeCMD(const char *cmd, char *result)
+void ImageComponent::executeCMD(const char *cmd, double *result)
 {
     char buf_ps[128]={0};
     char ps[128]={0};
@@ -14,17 +14,12 @@ void ImageComponent::executeCMD(const char *cmd, char *result)
     strcpy(ps, cmd);
     if((ptr=popen(ps, "r"))!=NULL)
     {
-        //while(fgets(buf_ps, 128, ptr)!=NULL)
-        {
-			fgets(buf_ps, 128, ptr);
-            //strcat(result, buf_ps);
-			memcpy(result,buf_ps,128);
-            //if(strlen(result)>128)
-            //s   break;
-        }
+		fgets(buf_ps, 128, ptr);
         pclose(ptr);
         ptr = NULL;
+		*result = (double)(atoi(buf_ps)) / 100.0;
     }
+
 }
 #endif
 Vector2i ImageComponent::getTextureSize() const
@@ -364,9 +359,8 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 #if defined(__linux__)
 			if (isBar && refreshCounter > refreshRate + isBar) //use +isBar to avoid too much execute in one frame
 			{
-				std::thread th(executeCMD, barCMD.data(), bar);
+				std::thread th(executeCMD, barCMD.data(), &barPercent);
 				th.detach();
-				double barPercent = (double)(atoi(bar)) / 100.0;
 				if (barPercent > 1 || barPercent < 0)
 					barPercent = 0.5;
 				if (isBar > 1)

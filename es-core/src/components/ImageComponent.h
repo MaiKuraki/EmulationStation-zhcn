@@ -108,10 +108,10 @@ private:
 #if defined(__linux__)
 	int isBar = 0; //1:horizonbar 2:verticalbar
 	std::string barCMD;
-	char bar[128] = {0};
+	double barPercent=0;
 	int refreshRate = 60;
 	int refreshCounter = 0;
-	static void executeCMD(const char *cmd, char *result);
+	static void executeCMD(const char *cmd, double *result);
 #endif
 
 	Vector2f mTopLeftCrop;

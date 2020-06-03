@@ -5,6 +5,7 @@
 #include "renderers/Renderer.h"
 #include "math/Vector2i.h"
 #include "GuiComponent.h"
+#include <atomic>
 
 class TextureResource;
 
@@ -108,10 +109,10 @@ private:
 #if defined(__linux__)
 	int isBar = 0; //1:horizonbar 2:verticalbar
 	std::string barCMD;
-	double barPercent=0;
+	std::atomic<double> barPercent;
 	int refreshRate = 60;
 	int refreshCounter = 0;
-	static void executeCMD(const char *cmd, double *result);
+	static void executeCMD(const char *cmd, std::atomic<double> *result);
 #endif
 
 	Vector2f mTopLeftCrop;

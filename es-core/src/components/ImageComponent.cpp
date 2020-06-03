@@ -6,7 +6,7 @@
 #include "ThemeData.h"
 
 #if defined(__linux__)
-void ImageComponent::executeCMD(const char *cmd, double *result)
+void ImageComponent::executeCMD(const char *cmd, std::atomic<double> *result)
 {
     char buf_ps[128]={0};
     char ps[128]={0};
@@ -17,7 +17,7 @@ void ImageComponent::executeCMD(const char *cmd, double *result)
 		fgets(buf_ps, 128, ptr);
         pclose(ptr);
         ptr = NULL;
-		*result = (double)(atoi(buf_ps)) / 100.0;
+		result->store((double)(atoi(buf_ps)) / 100.0);
     }
 
 }
@@ -40,6 +40,7 @@ ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic) : G
 	mColorShiftEnd(0xFFFFFFFF), mColorGradientHorizontal(true), mForceLoad(forceLoad), mDynamic(dynamic),
 	mFadeOpacity(0), mFading(false), mRotateByTargetSize(false), mTopLeftCrop(0.0f, 0.0f), mBottomRightCrop(1.0f, 1.0f)
 {
+	barPercent = 1;
 	updateColors();
 }
 

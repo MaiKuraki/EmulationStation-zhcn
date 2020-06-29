@@ -362,8 +362,10 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			{
 				std::thread th(executeCMD, barCMD.data(), &barPercent);
 				th.detach();
-				if (barPercent > 1 || barPercent < 0)
-					barPercent = 0.5;
+				if (barPercent > 1 )
+					barPercent = 1;
+				else if (barPercent  < 0)
+					barPercent = 0;
 				if (isBar > 1)
 				{
 					mTopLeftCrop.y() = 1 - barPercent;

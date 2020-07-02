@@ -458,6 +458,15 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 					if (elem->get<bool>("verticalBar"))
 						isBar = 2;
 				}
+				executeCMD(barCMD.data(), &barPercent);
+				if (isBar > 1)
+				{
+					mTopLeftCrop.y() = 1 - barPercent;
+				}
+				else
+				{
+					mBottomRightCrop.x() = barPercent;
+				}
 			}
 #endif
 			setResize(elem->get<Vector2f>("size") * scale);

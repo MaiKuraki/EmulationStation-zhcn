@@ -5,6 +5,7 @@
 #include "renderers/Renderer.h"
 #include "math/Vector2i.h"
 #include "GuiComponent.h"
+#include <atomic>
 
 class TextureResource;
 

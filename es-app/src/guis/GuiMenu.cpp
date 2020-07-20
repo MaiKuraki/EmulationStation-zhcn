@@ -45,6 +45,11 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 	if (isFullUI)
 		addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
+#if defined(__linux__)
+	if (isFullUI)
+		addEntry("TIME SETTINGS", 0x777777FF, true, [this] { openTimeSettings(); });
+#endif
+
 	addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
 
 	addChild(&mMenu);

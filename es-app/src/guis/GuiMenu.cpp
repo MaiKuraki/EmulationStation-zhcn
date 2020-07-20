@@ -555,7 +555,7 @@ void GuiMenu::addVersionInfo()
 	addChild(&mVersion);
 	
 }
-s
+
 void GuiMenu::openTimeSettings()
 {
 	mWindow->pushGui(new GuiTimeSettings(mWindow, "TIME SETTINGS"));

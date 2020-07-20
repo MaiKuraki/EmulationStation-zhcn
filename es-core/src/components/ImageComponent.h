@@ -104,7 +104,14 @@ private:
 	bool					mForceLoad;
 	bool					mDynamic;
 	bool					mRotateByTargetSize;
-
+#if defined(__linux__)
+	int isBar = 0; //1:horizonbar 2:verticalbar
+	std::string barCMD;
+	std::atomic<double> barPercent;
+	int refreshRate = 60;
+	int refreshCounter = 0;
+	static void executeCMD(const char *cmd, std::atomic<double> *result);
+#endif
 	Vector2f mTopLeftCrop;
 	Vector2f mBottomRightCrop;
 };

@@ -20,6 +20,7 @@ private:
 	void addVersionInfo();
 	void openCollectionSystemSettings();
 	void openConfigInput();
+	void openTimeSettings();
 	void openOtherSettings();
 	void openQuitMenu();
 	void openScraperSettings();

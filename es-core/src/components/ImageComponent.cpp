@@ -5,6 +5,24 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
+#if defined(__linux__)
+void ImageComponent::executeCMD(const char *cmd, std::atomic<double> *result)
+{
+    char buf_ps[128]={0};
+    char ps[128]={0};
+    FILE *ptr;
+    strcpy(ps, cmd);
+    if((ptr=popen(ps, "r"))!=NULL)
+    {
+		fgets(buf_ps, 128, ptr);
+        pclose(ptr);
+        ptr = NULL;
+		result->store((double)(atoi(buf_ps)) / 100.0);
+    }
+
+}
+#endif
+
 Vector2i ImageComponent::getTextureSize() const
 {
 	if(mTexture)
@@ -23,6 +41,7 @@ ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic) : G
 	mColorShiftEnd(0xFFFFFFFF), mColorGradientHorizontal(true), mForceLoad(forceLoad), mDynamic(dynamic),
 	mFadeOpacity(0), mFading(false), mRotateByTargetSize(false), mTopLeftCrop(0.0f, 0.0f), mBottomRightCrop(1.0f, 1.0f)
 {
+	barPercent = 1;
 	updateColors();
 }
 
@@ -338,6 +357,29 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
 			// The bind() function returns false if the texture is not currently loaded. A blank
 			// texture is bound in this case but we want to handle a fade so it doesn't just 'jump' in
 			// when it finally loads
+			#if defined(__linux__)
+			if (isBar && refreshCounter > refreshRate + isBar) //use +isBar to avoid too much execute in one frame
+			{
+				std::thread th(executeCMD, barCMD.data(), &barPercent);
+				th.detach();
+				if (barPercent > 1 )
+					barPercent = 1;
+				else if (barPercent  < 0)
+					barPercent = 0;
+				if (isBar > 1)
+				{
+					mTopLeftCrop.y() = 1 - barPercent;
+				}
+				else
+				{
+					mBottomRightCrop.x() = barPercent;
+				}
+
+				updateVertices();
+				refreshCounter = 0;
+			}
+			refreshCounter++;
+#endif
 			fadeIn(mTexture->bind());
 			Renderer::drawTriangleStrips(&mVertices[0], 4);
 
@@ -406,7 +448,30 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 	if(properties & ThemeFlags::SIZE)
 	{
 		if(elem->has("size"))
+		{
+#if defined(__linux__)
+			if (elem->has("bar"))
+			{
+				barCMD = elem->get<std::string>("bar");
+				isBar = 1;
+				if (elem->has("verticalBar"))
+				{
+					if (elem->get<bool>("verticalBar"))
+						isBar = 2;
+				}
+				executeCMD(barCMD.data(), &barPercent);
+				if (isBar > 1)
+				{
+					mTopLeftCrop.y() = 1 - barPercent;
+				}
+				else
+				{
+					mBottomRightCrop.x() = barPercent;
+				}
+			}
+#endif
 			setResize(elem->get<Vector2f>("size") * scale);
+		}
 		else if(elem->has("maxSize"))
 			setMaxSize(elem->get<Vector2f>("maxSize") * scale);
 		else if(elem->has("minSize"))

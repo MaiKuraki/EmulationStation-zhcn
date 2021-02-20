@@ -45,7 +45,10 @@ SystemData::SystemData(const std::string& name, const std::string& fullName, Sys
 		mRootFolder = new FileData(FOLDER, "" + name, mEnvData, this);
 	}
 	setIsGameSystemStatus();
-	loadTheme();
+
+	//async load theme
+	ThemeLoadThread=std::thread(loadTheme);
+	//loadTheme();
 }
 
 SystemData::~SystemData()

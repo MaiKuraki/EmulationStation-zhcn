@@ -7,6 +7,9 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <thread>
+
+std::thread ThemeLoadThread;
 
 class FileData;
 class FileFilterIndex;
@@ -25,7 +28,6 @@ class SystemData
 public:
 	SystemData(const std::string& name, const std::string& fullName, SystemEnvironmentData* envData, const std::string& themeFolder, bool CollectionSystem = false);
 	~SystemData();
-
 	inline FileData* getRootFolder() const { return mRootFolder; };
 	inline const std::string& getName() const { return mName; }
 	inline const std::string& getFullName() const { return mFullName; }

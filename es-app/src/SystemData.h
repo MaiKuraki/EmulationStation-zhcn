@@ -9,7 +9,7 @@
 #include <vector>
 #include <thread>
 
-static std::thread* ThemeLoadThread=NULL;
+static std::thread* volatile ThemeLoadThread=NULL;
 
 class FileData;
 class FileFilterIndex;

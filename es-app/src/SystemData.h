@@ -9,7 +9,31 @@
 #include <vector>
 #include <thread>
 
-static std::thread* volatile ThemeLoadThread=NULL;
+
+
+
+class ThemeLoadThread
+{
+private:
+	ThemeLoadThread(){ };
+	ThemeLoadThread(const ThemeLoadThread &);
+	ThemeLoadThread& operator=(const ThemeLoadThread &other);
+	~ThemeLoadThread(){  };
+
+	
+public:
+    static ThemeLoadThread *instance_;
+    std::thread *ptr;
+	static ThemeLoadThread* get()
+	{		
+		if (instance_ == NULL)
+        {
+            instance_ = new ThemeLoadThread;
+        }
+        return instance_;
+	};
+};
+
 
 class FileData;
 class FileFilterIndex;

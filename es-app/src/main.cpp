@@ -16,6 +16,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
+#include <unistd.h>
 #include <SDL_events.h>
 #include <SDL_main.h>
 #include <SDL_timer.h>
@@ -26,7 +27,7 @@
 #endif
 
 #include <FreeImage.h>
-
+ThemeLoadThread * ThemeLoadThread::instance_=NULL;
 bool scrape_cmdline = false;
 
 bool parseArgs(int argc, char* argv[])
@@ -367,8 +368,11 @@ int main(int argc, char* argv[])
 	// this makes for no delays when accessing content, but a longer startup time
 	ViewController::get()->preload();
 	window.renderLoadingScreen("渲染界面中");
-    if(ThemeLoadThread!=NULL)
-	   ThemeLoadThread->join();
+
+    ThemeLoadThread *s1=ThemeLoadThread::get();
+    while(s1->ptr==NULL)
+        sleep(1);
+	s1->ptr->join();
 	if(splashScreen && splashScreenProgress)
 		window.renderLoadingScreen("完成");
 

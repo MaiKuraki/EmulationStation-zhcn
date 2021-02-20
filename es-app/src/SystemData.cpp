@@ -47,7 +47,7 @@ SystemData::SystemData(const std::string& name, const std::string& fullName, Sys
 	setIsGameSystemStatus();
 
 	//async load theme
-	ThemeLoadThread=std::thread(&SystemData::loadTheme,this);
+	ThemeLoadThread=new std::thread(&SystemData::loadTheme,this);
 	//loadTheme();
 }
 

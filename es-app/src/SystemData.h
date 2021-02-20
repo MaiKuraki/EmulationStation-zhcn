@@ -9,7 +9,7 @@
 #include <vector>
 #include <thread>
 
-std::thread ThemeLoadThread;
+static std::thread ThemeLoadThread;
 
 class FileData;
 class FileFilterIndex;

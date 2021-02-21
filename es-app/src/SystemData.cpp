@@ -55,8 +55,8 @@ SystemData::SystemData(const std::string& name, const std::string& fullName, Sys
     	s1->ptr=new std::thread(&SystemData::loadTheme,this);
 		LOG(LogError)<<"malloc good";
 	}*/
-	if(this->getRootFolder()->getChildrenByFilename().size() != 0)
-		loadTheme();
+	//if(this->getRootFolder()->getChildrenByFilename().size() != 0)
+	loadTheme();
 }
 
 SystemData::~SystemData()

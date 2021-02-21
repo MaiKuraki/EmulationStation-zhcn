@@ -23,7 +23,7 @@ private:
 	
 public:
     static ThemeLoadThread *instance_;
-    std::thread *ptr;
+    std::thread *ptr=NULL;
 	static ThemeLoadThread* get()
 	{		
 		if (instance_ == NULL)

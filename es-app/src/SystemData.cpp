@@ -47,9 +47,16 @@ SystemData::SystemData(const std::string& name, const std::string& fullName, Sys
 	setIsGameSystemStatus();
 
 	//async load theme
+	/*
 	ThemeLoadThread *s1=ThemeLoadThread::get();
-    s1->ptr=new std::thread(&SystemData::loadTheme,this);
-	//loadTheme();
+	LOG(LogError)<<"ready..";
+	if(s1->ptr==NULL)
+	{
+    	s1->ptr=new std::thread(&SystemData::loadTheme,this);
+		LOG(LogError)<<"malloc good";
+	}*/
+	if(this->getRootFolder()->getChildrenByFilename().size() != 0)
+		loadTheme();
 }
 
 SystemData::~SystemData()
@@ -266,6 +273,12 @@ bool SystemData::loadConfig()
 		envData->mSearchExtensions = extensions;
 		envData->mLaunchCommand = cmd;
 		envData->mPlatformIds = platformIds;
+		/*ThemeLoadThread *s1=ThemeLoadThread::get();
+		if(s1->ptr!=NULL)
+		{
+    		s1->ptr->join();
+			s1->ptr=NULL;
+		}*/
 
 		SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
 		if(newSys->getRootFolder()->getChildrenByFilename().size() == 0)

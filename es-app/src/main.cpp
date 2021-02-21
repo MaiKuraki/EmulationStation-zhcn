@@ -366,13 +366,14 @@ int main(int argc, char* argv[])
 
 	// preload what we can right away instead of waiting for the user to select it
 	// this makes for no delays when accessing content, but a longer startup time
-	ViewController::get()->preload();
-	window.renderLoadingScreen("渲染界面中");
 
+	ViewController::get()->preload();
+
+	/*
     ThemeLoadThread *s1=ThemeLoadThread::get();
     while(s1->ptr==NULL)
         sleep(1);
-	s1->ptr->join();
+	s1->ptr->join();*/
 	if(splashScreen && splashScreenProgress)
 		window.renderLoadingScreen("完成");
 

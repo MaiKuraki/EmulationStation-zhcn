@@ -41,6 +41,24 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 	addWithLabel("显示游戏信息", ss_info);
 	addSaveFunc([ss_info, this] { Settings::getInstance()->setString("ScreenSaverGameInfo", ss_info->getSelected()); });
 
+	auto ss_video_mute = std::make_shared<SwitchComponent>(mWindow);
+	ss_video_mute->setState(Settings::getInstance()->getBool("ScreenSaverVideoMute"));
+	addWithLabel("MUTE SCREENSAVER AUDIO", ss_video_mute);
+	addSaveFunc([ss_video_mute] { Settings::getInstance()->setBool("ScreenSaverVideoMute", ss_video_mute->getState()); });
+
+
+	auto ss_vlc_resolution = std::make_shared< OptionListComponent<std::string> >(mWindow, "GAME INFO ALIGNMENT", false);
+	std::vector<std::string> vlc_res;
+	vlc_res.push_back("original"); // renders at original video resolution, stretched to fit screen
+	vlc_res.push_back("low"); // 25% of screen resolution
+	vlc_res.push_back("medium"); // 50% of screen resolution
+	vlc_res.push_back("high"); // 75% of screen resolution
+	vlc_res.push_back("max"); // full screen resolution
+	for(auto it = vlc_res.cbegin(); it != vlc_res.cend(); it++)
+		ss_vlc_resolution->add(*it, *it, Settings::getInstance()->getString("VlcScreenSaverResolution") == *it);
+	addWithLabel("VLC: SCREENSAVER VIDEO RESOLUTION", ss_vlc_resolution);
+	addSaveFunc([ss_vlc_resolution, this] { Settings::getInstance()->setString("VlcScreenSaverResolution", ss_vlc_resolution->getSelected()); });
+
 #ifdef _RPI_
 	ComponentListRow row;
 
@@ -63,11 +81,6 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 		Settings::getInstance()->setInt("SubtitleSize", subSize);
 	});
 
-	auto ss_video_mute = std::make_shared<SwitchComponent>(mWindow);
-	ss_video_mute->setState(Settings::getInstance()->getBool("ScreenSaverVideoMute"));
-	addWithLabel("MUTE SCREENSAVER AUDIO", ss_video_mute);
-	addSaveFunc([ss_video_mute] { Settings::getInstance()->setBool("ScreenSaverVideoMute", ss_video_mute->getState()); });
-
 	// Define subtitle font
 	auto ss_omx_font_file = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_SMALL), 0x777777FF);
 	addEditableTextComponent(row, "字体路径", ss_omx_font_file, Settings::getInstance()->getString("SubtitleFont"));
@@ -81,13 +94,6 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 	addSaveFunc([ss_omx_italic_font_file] {
 		Settings::getInstance()->setString("SubtitleItalicFont", ss_omx_italic_font_file->getValue());
 	});
-#endif
-
-#ifndef _RPI_
-	auto captions_compatibility = std::make_shared<SwitchComponent>(mWindow);
-	captions_compatibility->setState(Settings::getInstance()->getBool("CaptionsCompatibility"));
-	addWithLabel("为说明使用兼容的低分辨率", captions_compatibility);
-	addSaveFunc([captions_compatibility] { Settings::getInstance()->setBool("CaptionsCompatibility", captions_compatibility->getState()); });
 #endif
 }
 

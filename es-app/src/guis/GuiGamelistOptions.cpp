@@ -82,6 +82,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 
 		mMenu.addWithLabel("以此排序游戏：", mListSort);
 	}
+	
 	// show filtered menu
 	if(!Settings::getInstance()->getBool("ForceDisableFilters"))
 	{
